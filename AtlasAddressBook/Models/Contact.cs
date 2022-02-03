@@ -26,7 +26,7 @@ namespace AtlasAddressBook.Models
         public string FullName { get { return $"{FirstName} {LastName}"; } }
 
         [DataType(DataType.Date)]
-        public DateTime Birthday { get; set; }
+        public DateTime? Birthday { get; set; }
 
         [Required]
         public string? Address1 { get; set; }
@@ -54,7 +54,6 @@ namespace AtlasAddressBook.Models
         [DataType(DataType.Upload)]
         [Display(Name = "Contact Image")]
         public IFormFile? ImageFile { get; set; }
-
         public byte[]? ImageData { get; set; }
         public string? ImageType { get; set; }
 

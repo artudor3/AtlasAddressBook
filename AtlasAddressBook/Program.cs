@@ -1,6 +1,8 @@
 using AtlasAddressBook.Data;
 //Added
 using AtlasAddressBook.Models;
+using AtlasAddressBook.Services;
+using AtlasAddressBook.Services.Interfaces;
 //Instead of
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -20,10 +22,21 @@ builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireCo
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
+//Added Services
+builder.Services.AddScoped<IImageService, ImageService>();
+builder.Services.AddScoped<IContactService, ContactService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<DataService>();
+
+
 //Added
 builder.Services.AddMvc();
 
 var app = builder.Build();
+
+var scope = app.Services.CreateScope();
+
+await scope.ServiceProvider.GetRequiredService<DataService>().ManageDataAsync();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
