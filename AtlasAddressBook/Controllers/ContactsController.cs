@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity;
 using AtlasAddressBook.Services.Interfaces;
 using AtlasAddressBook.Enums;
 using Microsoft.AspNetCore.Authorization;
+using AtlasAddressBook.Services;
 
 namespace AtlasAddressBook.Controllers
 {
@@ -23,17 +24,23 @@ namespace AtlasAddressBook.Controllers
         private readonly ICategoryService _categoryService;
         private readonly IImageService _imageService;
         private readonly IContactService _contactService;
+        private readonly DataService _dataService;
+        private readonly SearchService _searchService;
         public ContactsController(ApplicationDbContext context,
                                   UserManager<AppUser> userManager,
                                   ICategoryService categoryService,
                                   IImageService imageService,
-                                  IContactService contactService)
+                                  IContactService contactService,
+                                  DataService dataService,
+                                  SearchService searchService)
         {
             _context = context;
             _userManager = userManager;
             _categoryService = categoryService;
             _imageService = imageService;
             _contactService = contactService;
+            _dataService = dataService;
+            _searchService = searchService;
         }
 
         // GET: Contacts
@@ -44,6 +51,17 @@ namespace AtlasAddressBook.Controllers
             List<Contact> contacts = await DBResults.ToListAsync();
 
             return View(contacts);
+        }
+
+        // Search POST method
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SearchContacts(string searchString)
+        {
+            var userId = _userManager.GetUserId(User);
+            var model = _searchService.SearchContacts(searchString, userId);
+
+            return View(nameof(Index), model);
         }
 
         // GET: Contacts/Details/5
@@ -87,11 +105,11 @@ namespace AtlasAddressBook.Controllers
             if (ModelState.IsValid)
             {
                 contact.UserId = userId;
-                contact.Created = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
+                contact.Created = _dataService.GetPostGresDate(DateTime.Now);
                 //or created = 
                 if (contact.Birthday is not null)
                 {
-                    contact.Birthday = DateTime.SpecifyKind((DateTime)contact.Birthday, DateTimeKind.Utc);
+                    contact.Birthday = _dataService.GetPostGresDate(contact.Birthday.Value);
                 }
                 if (contact.ImageFile is not null)
                 {
@@ -145,10 +163,10 @@ namespace AtlasAddressBook.Controllers
             {
                 try
                 {
-                    contact.Created = DateTime.SpecifyKind((DateTime)contact.Created, DateTimeKind.Utc);
+                    contact.Created = _dataService.GetPostGresDate(contact.Created);
                     if (contact.Birthday is not null)
                     {
-                        contact.Birthday = DateTime.SpecifyKind((DateTime)contact.Birthday, DateTimeKind.Utc);
+                        contact.Birthday = _dataService.GetPostGresDate(contact.Birthday.Value);
                     }
                     if (contact.ImageFile is not null)
                     {

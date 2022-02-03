@@ -27,7 +27,7 @@ namespace AtlasAddressBook.Services
                 || c.LastName!.ToLower().Contains(searchString.ToLower())
                 || c.Categories.Select(t => t.Name).Contains(searchString));
             }
-            return result.OrderByDescending(c => c.FirstName);
+            return result.OrderByDescending(c => c.LastName).ThenByDescending(c => c.FirstName);
         }
 
     }
