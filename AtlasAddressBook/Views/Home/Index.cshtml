@@ -1,8 +1,30 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    //Layout = "_LayoutNoGlass";
+    ViewData["Title"] = "Welcome";
 }
+<style>
+    body {
+        background: #141E30; /* fallback for old browsers */
+        background: -webkit-linear-gradient(to left, #243B55, #141E30); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #243B55, #141E30); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        
+        color: white;
+    }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    h1 {
+    }
+</style>
+
+<div class="row mt-5 align-items-center">
+    <div class="col-12 col-md-6 p-5">
+            <h1>Manage all your contacts in one place</h1>
+            <h6 class="lead">A simple, fast and scalable address book that helps you manage your contacts easily so you never lose contact information.</h6>
+            <button type="button" class="btn btn-warning my-3">Demo</button>
+            <h5>Built with ASP.NET Core, C#, .NET 6, MVC, Bootstrap 5 and Postgres SQL</h5>
+            <h5>Hosted with Netlify, CI/CD with GitHub</h5>
+    </div>
+    <div class="col-12 col-md-6 p-5 order-first order-md-last">
+        <img src="img/address-book-clipart.png" class="img-fluid" alt"address book logo" />
+    </div>
+
 </div>
