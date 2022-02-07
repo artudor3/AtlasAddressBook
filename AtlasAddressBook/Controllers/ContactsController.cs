@@ -16,7 +16,7 @@ using AtlasAddressBook.Services;
 
 namespace AtlasAddressBook.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class ContactsController : Controller
     {
         private readonly ApplicationDbContext _context;

@@ -14,7 +14,7 @@ using AtlasAddressBook.Services.Interfaces;
 
 namespace AtlasAddressBook.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class CategoriesController : Controller
     {
         private readonly ApplicationDbContext _context;
