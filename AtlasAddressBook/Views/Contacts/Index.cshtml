@@ -22,7 +22,7 @@
     <div class="card mb-3 glass-cf-style darkGlass">
         <div class="row g-0">
             <div class="col-md-4">
-                @if (!string.IsNullOrEmpty(item.ImageData!.ToString()))
+                @if (item.ImageData is not null)
                 {
                     <img src="@_ImageService.ConvertByteArrayToFile(item.ImageData, item.ImageType!)" class="contactList-image" alt="...">                    
                 }
